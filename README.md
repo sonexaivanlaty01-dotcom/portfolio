@@ -17,5 +17,5 @@
 | Project | Link |
 |---|---|
 | **Lao Video AI**: Lao speech-to-text, Lao caption fonts, caption editor | https://github.com/sonexaivanlaty01-dotcom/lao-video-ai-showcase |
-| **ລາວປອດໄພ / Lao Weather & Disaster Watch**: live weather, radar, river and dam map for Laos | https://github.com/sonexaivanlaty01-dotcom/lao-weather-watch (live: https://lao-weather-watch.sonexaivanlaty01.workers.dev) |
+| **ລາວປອດໄພ / Lao Weather & Disaster Watch**: live weather, radar, river and dam map for Laos | https://github.com/sonexaivanlaty01-dotcom/lao-weather-watch-public (live: https://lao-weather-watch.sonexaivanlaty01.workers.dev) |
 
