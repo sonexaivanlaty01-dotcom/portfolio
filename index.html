@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="lo">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ສອນໄຊ ວັນລາຕີ — AI Portfolio</title>
+<meta name="description" content="ຜົນງານ AI ຂອງ ສອນໄຊ ວັນລາຕີ: LINE AI Agent, Chatbot (RAG), ເວັບແຜນທີ່ອາກາດລາວ, ວິດີໂອ AI ພາສາລາວ ແລະ ລະບົບອັດຕະໂນມັດ.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@400;500;700;800&family=Noto+Sans+Lao+Looped:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Minimal, professional, blue — matches the CV. Single light look by choice. Projects first, grouped by the job's 3 areas. */
+:root {
+  --ink: #0F1B33; --muted: #56617A; --line: #DFE5F0; --paper: #FFFFFF; --tint: #F3F6FC;
+  --blue: #1D4ED8; --blue-d: #14317F; --blue-l: #DCE6FF;
+  --lao: "Noto Sans Lao", system-ui, sans-serif; --display: "Noto Sans Lao Looped", "Noto Sans Lao", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 17px/1.7 var(--lao); }
+img, video { max-width: 100%; display: block; }
+a { color: var(--blue); }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; }
+section { padding-block: 72px; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+h2 { font: 800 clamp(28px, 4vw, 38px)/1.25 var(--lao); }
+h3 { font: 700 22px/1.4 var(--lao); }
+p { margin: 0; }
+.eyebrow { font: 700 13px/1 var(--mono); letter-spacing: 3px; color: var(--blue); text-transform: uppercase; }
+.muted { color: var(--muted); }
+.tag { display: inline-block; font: 500 13px/1 var(--mono); color: var(--blue-d); background: var(--blue-l); padding: 6px 9px; border-radius: 6px; margin: 0 6px 6px 0; }
+.tags { margin-top: 12px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; font: 700 16px var(--lao); text-decoration: none; padding: 12px 22px; border-radius: 999px; border: 2px solid var(--blue); }
+.btn.primary { background: var(--blue); color: #fff; }
+.btn.ghost { color: var(--blue); background: #fff; }
+.head-row { display: flex; flex-direction: column; gap: 10px; margin-bottom: 36px; }
+
+/* nav */
+nav { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+nav .me { font: 800 18px var(--lao); color: var(--ink); text-decoration: none; }
+nav ul { display: flex; gap: 18px; list-style: none; margin: 0; padding: 0; font-size: 15px; }
+nav ul a { color: var(--muted); text-decoration: none; }
+nav ul a:hover { color: var(--blue); }
+@media (max-width: 640px) { nav ul { display: none; } }
+
+/* hero */
+.hero { background: linear-gradient(135deg, var(--blue-d), var(--blue)); color: #fff; padding-block: 72px 64px; }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 48px; align-items: center; }
+.hero .eyebrow { color: #BFD1FF; }
+.hero h1 { font: 800 clamp(44px, 7vw, 72px)/1.1 var(--lao); margin-top: 10px; }
+.hero .story { font: 700 clamp(22px, 3vw, 30px)/1.5 var(--display); margin-top: 18px; }
+.hero .story em { font-style: normal; background: rgba(255,255,255,.18); padding: 0 8px; border-radius: 6px; }
+.hero .lede { color: #DCE6FF; margin-top: 16px; max-width: 60ch; }
+.hero .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.hero .btn.primary { background: #fff; color: var(--blue-d); border-color: #fff; }
+.hero .btn.ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,.6); }
+.photo { aspect-ratio: 4/5; width: 100%; border-radius: 24px; border: 6px solid rgba(255,255,255,.25); background: linear-gradient(160deg, #C9D6EE, #9FB3D9); display: grid; place-items: center; color: #fff; font-weight: 700; overflow: hidden; }
+.photo img { width: 100%; height: 100%; object-fit: cover; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 40px; }
+.stat { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18); border-radius: 16px; padding: 16px 18px; }
+.stat b { display: block; font: 800 30px/1.1 var(--lao); }
+.stat span { color: #DCE6FF; font-size: 14px; }
+@media (max-width: 820px) {
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); }
+  .hero .photo { max-width: 150px; order: -1; border-radius: 20px; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* three areas */
+.areas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.area { background: var(--tint); border-radius: 20px; padding: 26px 24px; border-top: 6px solid var(--blue); display: flex; flex-direction: column; gap: 12px; }
+.area h3 { color: var(--blue); }
+.area ul { margin: 0; padding-left: 20px; }
+.area li a { color: var(--ink); text-decoration: none; border-bottom: 1px dashed var(--blue); }
+@media (max-width: 820px) { .areas { grid-template-columns: minmax(0, 1fr); } }
+
+/* projects */
+.project { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: center; padding-block: 44px; border-top: 1px solid var(--line); scroll-margin-top: 70px; }
+.project:nth-of-type(even) .media { order: 2; }
+.project .k { font: 700 12px/1 var(--mono); letter-spacing: 2px; color: var(--blue); background: var(--blue-l); padding: 6px 10px; border-radius: 999px; display: inline-block; margin-bottom: 12px; }
+.project dl { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 8px 14px; margin: 18px 0 0; }
+.project dt { font-weight: 700; color: var(--blue-d); }
+.project dd { margin: 0; color: var(--muted); }
+.media { border-radius: 20px; overflow: hidden; background: var(--tint); border: 1px solid var(--line); }
+.media.phone { max-width: 300px; margin-inline: auto; border-radius: 28px; border: 8px solid var(--ink); }
+.media .cap { font-size: 13px; color: var(--muted); padding: 8px 14px; background: #fff; border-top: 1px solid var(--line); }
+.duo { display: grid; gap: 14px; background: none; border: 0; justify-items: center; }
+.duo video { border-radius: 18px; border: 6px solid var(--ink); background: #000; width: 100%; }
+.duo video.tall { max-width: 280px; aspect-ratio: 9/16; }
+.duo video.wide { aspect-ratio: 16/9; }
+.live { margin-top: 18px; }
+@media (max-width: 820px) {
+  .project { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .project:nth-of-type(even) .media { order: 0; }
+}
+
+/* flow diagrams (no screenshots exist for these systems) */
+.flow { padding: 26px 22px; display: flex; flex-direction: column; gap: 10px; }
+.flow .step { background: #fff; border: 2px solid var(--line); border-radius: 14px; padding: 12px 16px; display: flex; gap: 12px; align-items: center; }
+.flow .step b { font: 700 13px var(--mono); color: #fff; background: var(--blue); border-radius: 8px; padding: 4px 8px; flex: none; }
+.flow .step.hot { border-color: var(--blue); }
+.flow .arrow { text-align: center; color: var(--blue); font-weight: 700; line-height: 1; }
+
+/* process */
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; counter-reset: s; }
+.steps li { list-style: none; background: var(--tint); border-radius: 18px; padding: 22px 20px; }
+.steps li::before { counter-increment: s; content: "0" counter(s); font: 700 14px var(--mono); color: var(--blue); display: block; margin-bottom: 8px; }
+.steps { padding: 0; margin: 0; }
+@media (max-width: 820px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* about */
+.about { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.about > div { border: 2px solid var(--line); border-radius: 18px; padding: 22px; }
+.about h3 { font-size: 18px; color: var(--blue); margin-bottom: 8px; }
+@media (max-width: 820px) { .about { grid-template-columns: minmax(0, 1fr); } }
+
+/* contact */
+.contact { background: var(--ink); color: #fff; border-radius: 28px; padding: 44px 36px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 28px; align-items: center; }
+.contact p { color: #C9D3E8; margin-top: 10px; }
+.contact .btns { display: flex; flex-wrap: wrap; gap: 12px; }
+.contact .btn.primary { background: #fff; color: var(--ink); border-color: #fff; }
+.contact .btn.ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,.5); }
+@media (max-width: 820px) { .contact { grid-template-columns: minmax(0, 1fr); } }
+footer { padding-block: 32px 48px; color: var(--muted); font-size: 14px; text-align: center; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="me" href="#top">ສອນໄຊ ວັນລາຕີ</a>
+  <ul><li><a href="#work">ຜົນງານ</a></li><li><a href="#process">ວິທີເຮັດວຽກ</a></li><li><a href="#about">ກ່ຽວກັບ</a></li><li><a href="#contact">ຕິດຕໍ່</a></li></ul>
+</div></nav>
+
+<header class="hero" id="top"><div class="wrap">
+  <div>
+    <div class="eyebrow">AI Specialist / AI Generalist</div>
+    <h1>ສອນໄຊ ວັນລາຕີ</h1>
+    <p class="story"><em>ນັກສ້າງລະບົບ AI</em><br>ຈາກບັນຫາຈິງ ສູ່ລະບົບທີ່ໃຊ້ງານໄດ້</p>
+    <p class="lede">ຂ້ອຍເອົາ AI ມາແກ້ບັນຫາຈິງໃນບ່ອນເຮັດວຽກ — ຈາກ LINE Chatbot ທີ່ພະນັກງານໃຊ້ທຸກມື້, AI Agent ທີ່ເຕືອນວຽກເອງ, ເຖິງເວັບແຜນທີ່ອາກາດຂອງລາວ ແລະ ວິດີໂອ AI ພາສາລາວ. ສ້າງດ້ວຍ AI Coding Tools ເຊັ່ນ Claude Code.</p>
+    <div class="cta"><a class="btn primary" href="#work">ເບິ່ງຜົນງານ ↓</a><a class="btn ghost" href="https://www.facebook.com/sonexai.vanlaty" target="_blank" rel="noopener">ຕິດຕໍ່ທາງ Facebook</a></div>
+    <div class="stats">
+      <div class="stat"><b>5</b><span>ໂປຣເຈັກທີ່ໃຊ້ງານຈິງ</span></div>
+      <div class="stat"><b>3</b><span>LINE Bot</span></div>
+      <div class="stat"><b>3</b><span>ດ້ານ: Software · Creative · Automation</span></div>
+      <div class="stat"><b>24/7</b><span>ເວັບອາກາດ ອັບເດດເອງ</span></div>
+    </div>
+  </div>
+  <div class="photo"><img src="assets/photo-portrait.jpg" alt="ສອນໄຊ ວັນລາຕີ ຢູ່ໂຕະເຮັດວຽກ"></div>
+</div></header>
+
+<main>
+<section id="areas"><div class="wrap">
+  <div class="head-row"><div class="eyebrow">ຄວາມສາມາດ</div><h2>ຜົນງານຄົບທັງ 3 ດ້ານ</h2></div>
+  <div class="areas">
+    <div class="area"><h3>💻 AI Software</h3><p class="muted">ສ້າງເວັບ, Web App ແລະ ລະບົບຫຼັງບ້ານ ດ້ວຍ AI Coding Tools.</p>
+      <ul><li><a href="#weather">ລາວປອດໄພ — ເວັບແຜນທີ່ອາກາດ</a></li><li><a href="#rag">Chatbot ຕອບພະນັກງານ (RAG)</a></li></ul>
+      <div><span class="tag">Claude Code</span><span class="tag">API</span><span class="tag">SQL</span><span class="tag">Git</span></div></div>
+    <div class="area"><h3>🎨 AI Creative</h3><p class="muted">ວິດີໂອ, ສຽງພາກ ແລະ Content ພາສາລາວ ສຳລັບ Facebook / TikTok.</p>
+      <ul><li><a href="#video">ວິດີໂອ AI ພາສາລາວ</a></li></ul>
+      <div><span class="tag">AI Video</span><span class="tag">AI Voice</span><span class="tag">Motion Graphics</span></div></div>
+    <div class="area"><h3>⚙️ AI Automation</h3><p class="muted">AI Agent, Chatbot ແລະ ການເຊື່ອມຕໍ່ລະບົບໃຫ້ເຮັດວຽກເອງ.</p>
+      <ul><li><a href="#lekha">ເລຂາໄຊ — AI Agent ໃນ LINE</a></li><li><a href="#scan">ລະບົບບັນທຶກການສະແກນ</a></li></ul>
+      <div><span class="tag">LINE API</span><span class="tag">AI Agent</span><span class="tag">Cron</span></div></div>
+  </div>
+</div></section>
+
+<section id="work" style="padding-top:0"><div class="wrap">
+  <div class="head-row"><div class="eyebrow">ຜົນງານ</div><h2>5 ໂປຣເຈັກ ທີ່ສ້າງດ້ວຍ AI</h2></div>
+
+  <article class="project" id="lekha">
+    <div class="media phone"><img src="assets/lekha-phone.jpg" alt="ພາບຈຳລອງການສັ່ງ @ເລຂາໄຊ ໃນກຸ່ມ LINE ແລະ ການແຈ້ງເຕືອນ" loading="lazy"><div class="cap">ພາບຈຳລອງ (ຂໍ້ມູນສົມມຸດ)</div></div>
+    <div><span class="k">AI AGENT</span><h3>ເລຂາໄຊ — ເລຂາ AI ໃນກຸ່ມ LINE</h3>
+      <dl><dt>ບັນຫາ</dt><dd>ໃນກຸ່ມວຽກມີຂໍ້ຄວາມຫຼາຍ ຈົນລືມນັດ ແລະ ຫາຮູບສຳຄັນບໍ່ເຈີ.</dd>
+        <dt>ວິທີແກ້</dt><dd>ພິມ @ເລຂາໄຊ ໃນກຸ່ມ — ມັນຈະບັນທຶກນັດ, ເຕືອນທຸກຄົນຕາມເວລາ, ຕອບຄຳຖາມດ້ວຍ AI ແລະ ເກັບຮູບທີ່ເລືອກໄວ້.</dd>
+        <dt>ເຕັກໂນໂລຢີ</dt><dd>ລະບົບກວດເວລາທຸກນາທີ (Cron), ຖານຂໍ້ມູນ SQL, AI ໃນ Cloudflare.</dd></dl>
+      <div class="tags"><span class="tag">Cloudflare Workers</span><span class="tag">D1 (SQL)</span><span class="tag">Workers AI</span><span class="tag">LINE Messaging API</span><span class="tag">Cron</span></div></div>
+  </article>
+
+  <article class="project" id="rag">
+    <div class="media"><div class="flow" aria-label="ຂັ້ນຕອນການເຮັດວຽກຂອງ Chatbot">
+      <div class="step"><b>1</b>ພະນັກງານຖາມໃນ LINE: “ໂປຣໂມຊັນມື້ນີ້ມີຫຍັງ?”</div><div class="arrow">↓</div>
+      <div class="step hot"><b>2</b>Bot ຄົ້ນຫາໃນຖານຂໍ້ມູນ: ກົດລະບຽບ · ເມນູ · ໂປຣໂມຊັນ</div><div class="arrow">↓</div>
+      <div class="step"><b>3</b>AI (Gemini / DeepSeek) ຮຽບຮຽງຄຳຕອບ ຈາກຂໍ້ມູນຈິງ</div><div class="arrow">↓</div>
+      <div class="step"><b>4</b>ຕອບພະນັກງານທັນທີ — ບໍ່ຕ້ອງລໍຖາມຫົວໜ້າ</div>
+    </div><div class="cap">ແຜນພາບການເຮັດວຽກ · ບໍ່ສະແດງຂໍ້ມູນຂອງຮ້ານ</div></div>
+    <div><span class="k">CHATBOT · RAG</span><h3>Chatbot ຕອບ ແລະ ຝຶກພະນັກງານຮ້ານອາຫານ</h3>
+      <dl><dt>ບັນຫາ</dt><dd>ພະນັກງານໃໝ່ມີຄຳຖາມຫຼາຍ ກ່ຽວກັບກົດລະບຽບ, ເມນູ ແລະ ໂປຣໂມຊັນ — ຕ້ອງຖາມຄົນອື່ນຊ້ຳໆ.</dd>
+        <dt>ວິທີແກ້</dt><dd>ເກັບຄວາມຮູ້ຂອງຮ້ານໄວ້ໃນຖານຂໍ້ມູນ ແລ້ວໃຫ້ AI ຄົ້ນຫາກ່ອນຕອບ (RAG) — ຄຳຕອບຈຶ່ງອີງຂໍ້ມູນຈິງ ບໍ່ມົ່ວ.</dd>
+        <dt>ຜົນ</dt><dd>ໃຊ້ງານຈິງທຸກມື້ ຊ່ວຍຕອບຄຳຖາມ ແລະ ຝຶກພະນັກງານໃໝ່. ອັບເດດຂໍ້ມູນງ່າຍຜ່ານ Google Sheet.</dd></dl>
+      <div class="tags"><span class="tag">Supabase</span><span class="tag">PostgreSQL</span><span class="tag">Gemini</span><span class="tag">DeepSeek</span><span class="tag">Google Sheet</span><span class="tag">RAG</span></div></div>
+  </article>
+
+  <article class="project" id="weather">
+    <div class="media"><img src="assets/weather-desktop.jpg" alt="ໜ້າເວັບລາວປອດໄພ: ແຜນທີ່ພາບເມກ ແລະ ຂໍ້ມູນອາກາດ ສປປ ລາວ" loading="lazy"><div class="cap">ພາບໜ້າຈໍຈິງ · lao-weather-watch</div></div>
+    <div><span class="k">WEBSITE</span><h3>ລາວປອດໄພ — ເວັບແຜນທີ່ອາກາດ ແລະ ໄພພິບັດ</h3>
+      <dl><dt>ບັນຫາ</dt><dd>ຂໍ້ມູນຝົນ, ລະດັບນ້ຳ ແລະ ເຂື່ອນຂອງລາວ ກະແຈກກະຈາຍ ຫຼາຍແຫຼ່ງ ແລະ ບໍ່ເປັນພາສາລາວ.</dd>
+        <dt>ວິທີແກ້</dt><dd>ລວມພາບດາວທຽມ, ເຣດາ, ລະດັບນ້ຳ ແລະ ແຈ້ງເຕືອນ ໄວ້ໃນແຜນທີ່ດຽວ ເປັນພາສາລາວ. ລະບົບດຶງຂໍ້ມູນໃໝ່ເອງ ທຸກ 30 ນາທີ.</dd>
+        <dt>ເຕັກໂນໂລຢີ</dt><dd>Web App ເທິງ Cloudflare, ເກັບໄຟລ໌ພາບເຣດາ, ຖານຂໍ້ມູນຄຳຕິຊົມ, ເຊື່ອມ API ຂໍ້ມູນອາກາດ.</dd></dl>
+      <div class="tags"><span class="tag">Web App</span><span class="tag">KV</span><span class="tag">D1</span><span class="tag">R2</span><span class="tag">Cron</span><span class="tag">Git</span></div>
+      <div class="live"><a class="btn ghost" href="https://lao-weather-watch.sonexaivanlaty01.workers.dev" target="_blank" rel="noopener">ເປີດເວັບຈິງ ↗</a></div></div>
+  </article>
+
+  <article class="project" id="video">
+    <div class="media duo">
+      <video class="tall" src="assets/lekha-reel.mp4" poster="assets/lekha-free.jpg" controls preload="none" playsinline aria-label="ວິດີໂອ ເລຂາໄຊ ພາສາລາວ"></video>
+      <video class="wide" src="assets/motion-showreel.mp4" poster="assets/show-sphere.jpg" controls preload="none" playsinline aria-label="Motion graphics showreel"></video>
+    </div>
+    <div><span class="k">CREATIVE</span><h3>ວິດີໂອ AI ພາສາລາວ</h3>
+      <dl><dt>ສິ່ງທີ່ເຮັດ</dt><dd>Reel ແນະນຳ ເລຂາໄຊ 35 ວິນາທີ ແລະ Motion Graphics Showreel — ພາບເຄື່ອນໄຫວ, ເພງ ແລະ ສຽງ ສ້າງດ້ວຍໂຄດທັງໝົດ ທີ່ AI ຂຽນໃຫ້.</dd>
+        <dt>ສຽງພາກ</dt><dd>ສຽງພາກ AI ພາສາລາວ ເລືອກອາລົມສຽງໄດ້, ຊັບລາວ-ໄທ ຂຶ້ນຕົງກັບສຽງ, ເພງຫຼຸດລົງເອງເວລາມີສຽງເວົ້າ.</dd>
+        <dt>ຈຸດເດັ່ນ</dt><dd>Full HD ແນວຕັ້ງ 9:16 ສຳລັບ Facebook Reels / TikTok, ບໍ່ຕິດລິຂະສິດເພງ.</dd></dl>
+      <div class="tags"><span class="tag">Gemini TTS</span><span class="tag">HTML Canvas</span><span class="tag">WebCodecs</span><span class="tag">Motion Graphics</span></div></div>
+  </article>
+
+  <article class="project" id="scan">
+    <div class="media"><div class="flow" aria-label="ຂັ້ນຕອນລະບົບບັນທຶກການສະແກນ">
+      <div class="step"><b>1</b>ເຄື່ອງສະແກນສົ່ງຂໍ້ຄວາມເຂົ້າ Telegram</div><div class="arrow">↓</div>
+      <div class="step hot"><b>2</b>ແອັບອັດຕະໂນມັດໃນມືຖື ອ່ານ ແລະ ສົ່ງຕໍ່</div><div class="arrow">↓</div>
+      <div class="step"><b>3</b>ບັນທຶກເຂົ້າຖານຂໍ້ມູນ ແລະ ເລຂາໄຊ ແຈ້ງເຕືອນ</div>
+    </div><div class="cap">ແຜນພາບການເຮັດວຽກ</div></div>
+    <div><span class="k">AUTOMATION</span><h3>ລະບົບບັນທຶກການສະແກນເຂົ້າວຽກ</h3>
+      <dl><dt>ບັນຫາ</dt><dd>ຂໍ້ມູນການສະແກນເຂົ້າວຽກ ກະຈາຍຢູ່ໃນແຊັດ, ກວດສອບຍາກ.</dd>
+        <dt>ວິທີແກ້</dt><dd>ເຊື່ອມ 3 ລະບົບເຂົ້າກັນ: Telegram → ແອັບອັດຕະໂນມັດໃນ Android → ຖານຂໍ້ມູນ — ບັນທຶກເອງ ບໍ່ຕ້ອງພິມ.</dd>
+        <dt>ເຕັກໂນໂລຢີ</dt><dd>ການເຊື່ອມຕໍ່ API ແລະ Webhook, ຖານຂໍ້ມູນ SQL.</dd></dl>
+      <div class="tags"><span class="tag">Automation</span><span class="tag">Telegram</span><span class="tag">Android</span><span class="tag">D1 (SQL)</span></div></div>
+  </article>
+</div></section>
+
+<section id="process" style="background:var(--tint)"><div class="wrap">
+  <div class="head-row"><div class="eyebrow">ວິທີເຮັດວຽກ</div><h2>ຈາກບັນຫາຈິງ ເຖິງລະບົບທີ່ໃຊ້ງານໄດ້</h2></div>
+  <ol class="steps">
+    <li><h3>ເຫັນບັນຫາ</h3><p class="muted">ເລີ່ມຈາກສິ່ງທີ່ຄົນໃນບ່ອນເຮັດວຽກພົບແທ້ໆ.</p></li>
+    <li><h3>ອະທິບາຍໃຫ້ AI</h3><p class="muted">ຂຽນ Prompt ໃຫ້ຊັດເຈນ ແລະ ແບ່ງວຽກເປັນຂັ້ນໆ.</p></li>
+    <li><h3>ທົດສອບ ແລະ ແກ້</h3><p class="muted">ລອງໃຊ້ຈິງ, ຫາຂໍ້ຜິດພາດ, ສັ່ງ AI ແກ້ຈົນໃຊ້ໄດ້.</p></li>
+    <li><h3>ໃຊ້ງານຈິງ</h3><p class="muted">ເປີດໃຫ້ຄົນໃຊ້ ແລະ ປັບປຸງຕາມຄຳຕິຊົມ.</p></li>
+  </ol>
+</div></section>
+
+<section id="about"><div class="wrap">
+  <div class="head-row"><div class="eyebrow">ກ່ຽວກັບຂ້ອຍ</div><h2>ປະສົບການ ແລະ ທັກສະ</h2></div>
+  <div class="about">
+    <div><h3>ປະສົບການ</h3><p><b>ນັກສ້າງລະບົບ AI ອິດສະຫຼະ</b></p><p class="muted">Independent AI Builder · 2026 – ປັດຈຸບັນ<br>ອອກແບບ, ສ້າງ ແລະ ດູແລ 5 ໂປຣເຈັກ AI ທີ່ໃຊ້ງານຈິງ: LINE Bot 3 ຕົວ, ເວັບໄຊສາທາລະນະ ແລະ ວິດີໂອ AI ພາສາລາວ.</p></div>
+    <div><h3>ການສຶກສາ · ພາສາ</h3><p><b>ຈົບມັດທະຍົມຕອນປາຍ (ມ.7)</b></p><p class="muted">ລາວ — ພາສາແມ່<br>ໄທ — ດີ<br>ອັງກິດ — ໃຊ້ AI ຊ່ວຍສື່ສານ</p></div>
+    <div><h3>ເຄື່ອງມື</h3><div><span class="tag">Claude Code</span><span class="tag">Prompt Engineering</span><span class="tag">Gemini</span><span class="tag">DeepSeek</span><span class="tag">Cloudflare</span><span class="tag">Supabase</span><span class="tag">LINE API</span><span class="tag">Git</span><span class="tag">SQL</span></div></div>
+  </div>
+</div></section>
+
+<section id="contact" style="padding-top:0"><div class="wrap">
+  <div class="contact">
+    <div><h2>ມາສ້າງສິ່ງທີ່ໃຊ້ງານໄດ້ຈິງ ດ້ວຍ AI ນຳກັນ</h2><p>ພ້ອມຮຽນຮູ້ເຄື່ອງມືໃໝ່ ແລະ ລົງມືເຮັດທັນທີ.</p></div>
+    <div class="btns"><a class="btn primary" href="https://www.facebook.com/sonexai.vanlaty" target="_blank" rel="noopener">Facebook</a><a class="btn ghost" id="phone" href="https://wa.me/66809900117" target="_blank" rel="noopener">WhatsApp: +66 80 990 0117</a></div>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">ເວັບໄຊນີ້ກໍສ້າງດ້ວຍ AI (Claude Code) · © 2026 ສອນໄຊ ວັນລາຕີ</div></footer>
+</body>
+</html>

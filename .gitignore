@@ -1,0 +1,18 @@
+# Never publish secrets or local data
+.dev.vars
+.env
+.env.*
+*SECRET*
+*secret*.txt
+ADMIN_KEY*
+VAPID_PRIVATE*
+gemini-key.txt
+*.pem
+*.key
+node_modules/
+.wrangler/
+backups/
+*.sql
+*.sql.bak
+*.wav
+*.mp3
